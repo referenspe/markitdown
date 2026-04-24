@@ -14,6 +14,15 @@ Example usage::
     md = MarkItDown()
     result = md.convert("document.pdf")
     print(result.text_content)
+
+Note: For image conversion, an OpenAI client must be passed explicitly::
+
+    from openai import OpenAI
+    from markitdown import MarkItDown
+
+    md = MarkItDown(llm_client=OpenAI(), llm_model="gpt-4o")
+    result = md.convert("image.png")
+    print(result.text_content)
 """
 
 from markitdown._markitdown import MarkItDown, DocumentConverter, ConversionResult
