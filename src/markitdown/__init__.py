@@ -29,6 +29,14 @@ Tip: You can also convert from a URL directly::
     md = MarkItDown()
     result = md.convert("https://example.com/document.pdf")
     print(result.text_content)
+
+Tip: To convert a string of HTML directly (without a file), use convert_stream::
+
+    import io
+    md = MarkItDown()
+    html_bytes = b"<h1>Hello</h1><p>World</p>"
+    result = md.convert_stream(io.BytesIO(html_bytes), file_extension=".html")
+    print(result.text_content)
 """
 
 from markitdown._markitdown import MarkItDown, DocumentConverter, ConversionResult
