@@ -23,6 +23,12 @@ Note: For image conversion, an OpenAI client must be passed explicitly::
     md = MarkItDown(llm_client=OpenAI(), llm_model="gpt-4o")
     result = md.convert("image.png")
     print(result.text_content)
+
+Tip: You can also convert from a URL directly::
+
+    md = MarkItDown()
+    result = md.convert("https://example.com/document.pdf")
+    print(result.text_content)
 """
 
 from markitdown._markitdown import MarkItDown, DocumentConverter, ConversionResult
@@ -33,4 +39,5 @@ __all__ = [
     "ConversionResult",
 ]
 
+# Personal note: bumping to reflect my fork's starting point
 __version__ = "0.1.0"
