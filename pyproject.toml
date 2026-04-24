@@ -96,4 +96,6 @@ testpaths = ["tests"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-addopts = "--cov=src/markitdown --cov-report=term-missing"
+# Removed --cov flags so a plain `pytest` run doesn't require pytest-cov to be installed.
+# Run `pytest --cov=src/markitdown --cov-report=term-missing` manually when you need coverage.
+addopts = "-v"
