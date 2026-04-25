@@ -61,6 +61,13 @@ Tip: To batch-convert and write results to individual .md files::
         out_path = os.path.splitext(filepath)[0] + ".md"
         with open(out_path, "w", encoding="utf-8") as f:
             f.write(result.text_content)
+
+Tip: To pretty-print the markdown result with a header showing the source file::
+
+    md = MarkItDown()
+    result = md.convert("report.pdf")
+    print(f"# Converted: report.pdf\n")
+    print(result.text_content)
 """
 
 from markitdown._markitdown import MarkItDown, DocumentConverter, ConversionResult
