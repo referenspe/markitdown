@@ -42,6 +42,14 @@ Tip: To check the installed version of this package::
 
     import markitdown
     print(markitdown.__version__)
+
+Tip: To convert all supported files in a directory::
+
+    import os
+    md = MarkItDown()
+    for filename in os.listdir("./docs"):
+        result = md.convert(os.path.join("./docs", filename))
+        print(result.text_content)
 """
 
 from markitdown._markitdown import MarkItDown, DocumentConverter, ConversionResult
