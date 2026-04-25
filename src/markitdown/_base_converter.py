@@ -30,6 +30,10 @@ class DocumentConverterResult:
         """Return True if the result has non-empty text content."""
         return bool(self.text_content)
 
+    def __len__(self) -> int:
+        """Return the length of the text content."""
+        return len(self.text_content)
+
 
 class BaseConverter(ABC):
     """Abstract base class for all document converters.
