@@ -75,6 +75,15 @@ Tip: To strip leading/trailing whitespace from the converted output::
     result = md.convert("document.pdf")
     clean_text = result.text_content.strip()
     print(clean_text)
+
+Tip: To handle conversion errors gracefully::
+
+    md = MarkItDown()
+    try:
+        result = md.convert("unknown_file.xyz")
+        print(result.text_content)
+    except Exception as e:
+        print(f"Conversion failed: {e}")
 """
 
 from markitdown._markitdown import MarkItDown, DocumentConverter, ConversionResult
