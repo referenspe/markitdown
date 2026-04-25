@@ -68,6 +68,13 @@ Tip: To pretty-print the markdown result with a header showing the source file::
     result = md.convert("report.pdf")
     print(f"# Converted: report.pdf\n")
     print(result.text_content)
+
+Tip: To strip leading/trailing whitespace from the converted output::
+
+    md = MarkItDown()
+    result = md.convert("document.pdf")
+    clean_text = result.text_content.strip()
+    print(clean_text)
 """
 
 from markitdown._markitdown import MarkItDown, DocumentConverter, ConversionResult
