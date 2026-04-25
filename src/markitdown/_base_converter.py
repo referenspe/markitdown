@@ -26,6 +26,10 @@ class DocumentConverterResult:
         """Return the text content as the string representation."""
         return self.text_content
 
+    def __bool__(self) -> bool:
+        """Return True if the result has non-empty text content."""
+        return bool(self.text_content)
+
 
 class BaseConverter(ABC):
     """Abstract base class for all document converters.
