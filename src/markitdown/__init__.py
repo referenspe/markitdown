@@ -50,6 +50,17 @@ Tip: To convert all supported files in a directory::
     for filename in os.listdir("./docs"):
         result = md.convert(os.path.join("./docs", filename))
         print(result.text_content)
+
+Tip: To batch-convert and write results to individual .md files::
+
+    import os
+    md = MarkItDown()
+    for filename in os.listdir("./docs"):
+        filepath = os.path.join("./docs", filename)
+        result = md.convert(filepath)
+        out_path = os.path.splitext(filepath)[0] + ".md"
+        with open(out_path, "w", encoding="utf-8") as f:
+            f.write(result.text_content)
 """
 
 from markitdown._markitdown import MarkItDown, DocumentConverter, ConversionResult
