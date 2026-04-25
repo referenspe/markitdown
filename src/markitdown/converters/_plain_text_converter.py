@@ -19,7 +19,8 @@ class PlainTextConverter(BaseConverter):
     stripping excessive blank lines.
     """
 
-    ACCEPTED_EXTENSIONS = {".txt", ".text", ".log"}
+    # Added .md and .rst since they're also plain text at the binary level
+    ACCEPTED_EXTENSIONS = {".txt", ".text", ".log", ".md", ".rst"}
     ACCEPTED_MIME_TYPES = {"text/plain"}
 
     def accepts(
@@ -87,15 +88,7 @@ class PlainTextConverter(BaseConverter):
         # Collapse runs of more than two blank lines into exactly two
         text = re.sub(r"\n{3,}", "\n\n", text)
 
-        # Strip leading/trailing whitespace from the document
+        # Strip leading/trailing whitespace from the whole document
         text = text.strip()
 
-        if not text:
-            return DocumentConverterResult(markdown="", title=None)
-
-        # If the file is a .log file, wrap in a fenced code block for
-        # better readability in rendered Markdown.
-        if file_extension and file_extension.lower() == ".log":
-            text = f"```\n{text}\n```"
-
-        return DocumentConverterResult(markdown=text, title=None)
+        return DocumentConverterResult(markdown=text)
