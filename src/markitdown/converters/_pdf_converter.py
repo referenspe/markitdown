@@ -25,6 +25,12 @@ class PdfConverter(BaseConverter):
     SUPPORTED_EXTENSIONS = {".pdf"}
     SUPPORTED_MIME_TYPES = {"application/pdf"}
 
+    # Minimum number of non-whitespace characters a page must contain to be
+    # included in the output.  Pages below this threshold are likely blank or
+    # contain only scanned images with no extractable text, so skipping them
+    # keeps the output cleaner.
+    MIN_PAGE_CHARS = 10
+
     def accepts(
         self,
         source: Union[str, BinaryIO],
@@ -63,6 +69,8 @@ class PdfConverter(BaseConverter):
         Returns:
             A DocumentConverterResult whose text_content contains the
             extracted text with pages separated by horizontal rules.
+            Pages with fewer than MIN_PAGE_CHARS non-whitespace characters
+            are silently skipped.
 
         Raises:
             ImportError: If pdfminer.six is not installed.
@@ -88,22 +96,3 @@ class PdfConverter(BaseConverter):
         pages_text: list[str] = []
         try:
             for page_layout in extract_pages(file_obj):
-                page_lines: list[str] = []
-                for element in page_layout:
-                    if isinstance(element, LTTextContainer):
-                        text = element.get_text()
-                        stripped = text.strip()
-                        if stripped:
-                            page_lines.append(stripped)
-                if page_lines:
-                    pages_text.append("\n".join(page_lines))
-        finally:
-            if should_close:
-                file_obj.close()
-
-        if not pages_text:
-            return DocumentConverterResult(text_content="")
-
-        # Join pages with a Markdown horizontal rule
-        markdown = "\n\n---\n\n".join(pages_text)
-        return DocumentConverterResult(text_content=markdown)
